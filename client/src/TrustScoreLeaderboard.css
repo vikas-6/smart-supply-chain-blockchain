@@ -1,0 +1,42 @@
+/* TrustScoreLeaderboard component styling */
+
+.trustscore-leaderboard {
+  padding: var(--spacing-xl);
+  background: white;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+  margin: var(--spacing-xl) auto;
+  max-width: 1000px;
+}
+
+.trustscore-leaderboard .filter-section {
+  margin-bottom: var(--spacing-lg);
+}
+
+.trustscore-leaderboard .search-input {
+  width: 100%;
+  padding: var(--spacing-sm);
+  border: 2px solid var(--gray-200);
+  border-radius: var(--radius-md);
+}
+
+.trustscore-leaderboard .table th {
+  background: var(--gray-100);
+}
+
+.trustscore-leaderboard .table tbody tr:nth-child(even) {
+  background: var(--gray-50);
+}
+
+.trustscore-leaderboard .top1 {
+  background: var(--success-light);
+  font-weight: 600;
+}
+
+.trustscore-leaderboard .top2 {
+  background: var(--warning-light);
+}
+
+.trustscore-leaderboard .top3 {
+  background: var(--danger-light);
+}

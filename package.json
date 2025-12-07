@@ -1,0 +1,17 @@
+{
+  "name": "smart-supplychain-blockchain",
+  "version": "1.0.0",
+  "description": "AI-Powered Blockchain Supply Chain Verification System",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Vikas Kumar",
+  "license": "MIT",
+  "dependencies": {
+    "truffle": "^5.7.4"
+  }
+}
