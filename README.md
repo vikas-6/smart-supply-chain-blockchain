@@ -1,237 +1,118 @@
-# Smart SupplyChain Blockchain
+# Smart Supply Chain Blockchain
 
-A robust blockchain-based Supply Chain Management system featuring **AI-driven anti-counterfeit intelligence**, **TrustScore reputation system**, and **automated recall management**. This project leverages Ethereum smart contracts and Machine Learning to ensure product authenticity and transparency.
+![Architecture Diagram](client/public/architecture.png)
 
-## Core Features
+A robust, enterprise-grade Supply Chain Management system powered by **Ethereum Blockchain**, **AI-driven Anti-Counterfeit Intelligence**, and a **TrustScore Reputation System**. This project ensures authentic product provenance, transparent lifecycle tracking, and automated anomaly detection to prevent fraud.
 
-### 1. AI-Powered Anti-Counterfeit Intelligence
-- **Risk Analysis Model**: Analyzes supply chain data to detect anomalies.
-- **Time Gap Analysis**: Flags suspicious transaction timings between supply chain stages.
-- **Location Validation**: Verifies geographical consistency of transactions.
-- **Duplicate Detection**: Identifies potential cloned product entries.
-- **Automated Flagging**: Products exceeding risk thresholds are automatically flagged for review.
+---
 
-### 2. Public Verification Portal
-- **QR Code Authentication**: Allows end-users to verify product history and authenticity.
-- **Supply Chain Visibility**: Displays the complete journey of the product from manufacturer to retailer.
-- **Safety Alerts**: Prominently displays recall status and risk warnings.
+## 🌟 Core Features
 
-### 3. TrustScore Reputation System
-- **Soulbound Tokens**: Non-transferable reputation identifiers for supply chain participants.
-- **Dynamic Scoring**: Reputation scores update automatically based on successful deliveries and compliance.
-- **Tiered System**: Participants are categorized (Platinum, Gold, Silver, Bronze) based on performance.
+### 🛡️ AI-Powered Anti-Counterfeit Intelligence
+*   **Risk Analysis Model**: Real-time analysis of supply chain data to detect anomalies and fraud.
+*   **Automated Flagging**: Products exceeding risk thresholds are automatically flagged for review.
+*   **Dynamic Risk Scoring**: Evaluates transaction timings, location consistency, and duplicate entries.
 
-### 4. Smart Recall System
-- **Global Recall**: Triggering a recall instantly updates the status across the entire blockchain.
-- **Transaction Locking**: Prevents further movement or sale of recalled batches.
-- **Transparency**: Recall reasons are authentically recorded on-chain.
+### 📊 TrustScore Reputation System
+*   **Soulbound Tokens**: Non-transferable reputation identifiers for all supply chain participants.
+*   **Performance-Based Scoring**: Scores update automatically based on successful, verified deliveries.
+*   **Leaderboard**: Transparent ranking of participants (Platinum, Gold, Silver, Bronze) to incentivize compliance.
 
-## Tech Stack
+### 🔍 Public Verification Portal
+*   **Instant Logic Verification**: End-users can scan QR codes to instantly verify product authenticity.
+*   **Complete Provenance**: Visualizes the entire journey from raw material to retail shelf.
+*   **Safety Alerts**: Immediate warnings for recalled or high-risk products.
 
-- **Smart Contracts**: Solidity ^0.5.16
-- **Blockchain**: Ethereum (Ganache for local development)
-- **Frontend**: React.js with modern UI/UX
-- **Backend Services**: Node.js + Express (Anomaly Detection, Recall Management)
-- **Web3**: Web3.js for blockchain integration
-- **Build Tool**: Truffle
-- **AI/ML**: Custom risk analysis algorithms
+---
 
-## Prerequisites
+## 🏗️ Architecture
 
-- Node.js v14+
-- Ganache (GUI or CLI)
-- MetaMask browser extension
-- Truffle
-- Git
+The system is built on a modular architecture combining a decentralized ledger with off-chain AI services.
 
-## 🚀 Installation & Setup
+*   **Smart Contracts**: `SmartSupplyChain` (Logic) & `SmartTrustScore` (Reputation) deployed on Ethereum.
+*   **Frontend**: React.js dashboard with Web3.js integration.
+*   **AI Service**: Node.js microservice for anomaly detection and risk scoring.
 
-### 1. Clone & Install Dependencies
+---
 
-```bash
-git clone <your-repo>
-cd Smart-SupplyChain-Blockchain
+## 🛠️ Tech Stack
 
-# Install root dependencies
-npm install
+*   **Blockchain**: Ethereum (Ganache for Dev, Sepolia for Testnet)
+*   **Smart Contracts**: Solidity ^0.5.16
+*   **Frontend**: React.js, CSS3 (Custom Design System)
+*   **Backend**: Node.js, Express.js (Anomaly Service)
+*   **Libraries**: Web3.js, Truffle Suite, QRCode.react
 
-# Install client dependencies
-cd client
-npm install
-cd ..
+---
 
-# Install anomaly service dependencies
-cd anomaly-service
-npm install
-cd ..
-```
+## 🚀 Getting Started
 
-### 2. Start Ganache
+### Prerequisites
+*   Node.js v14+
+*   Ganache (Workspace: Port 8545, Network ID 1337)
+*   MetaMask (Browser Extension)
+*   Truffle (`npm install -g truffle`)
 
-Open Ganache GUI and create a workspace with:
-- Port: 8545
-- Network ID: 1337 (or use "*" in truffle config)
+### Installation
 
-### 3. Compile & Deploy Smart Contracts
+1.  **Clone the Repository**
+    ```bash
+    git clone https://github.com/vikas-6/smart-supply-chain-blockchain.git
+    cd smart-supply-chain-blockchain
+    ```
 
-```bash
-npx truffle compile
-npx truffle migrate --reset
-```
+2.  **Install Dependencies**
+    ```bash
+    # Root dependencies
+    npm install
 
-> **Note**: The migration will deploy both `SmartSupplyChain.sol` and `SmartTrustScore.sol` contracts.
+    # Client dependencies
+    cd client
+    npm install
+    ```
 
-### 4. Start Anomaly Detection Service
+3.  **Start Local Blockchain**
+    *   Open **Ganache**.
+    *   Create a workspace with **Port: 8545** and **Network ID: 1337**.
 
-```bash
-cd anomaly-service
-cp .env.example .env
-# Edit .env if needed (default values work for testing)
-npm start
-```
+4.  **Deploy Contracts**
+    ```bash
+    # From the project root
+    truffle migrate --reset
+    ```
 
-The service will run on `http://localhost:5000`
+5.  **Run Application**
+    ```bash
+    cd client
+    npm start
+    ```
+    The DApp will launch at `http://localhost:3000`.
 
-###5. Start Frontend
+---
 
-```bash
-cd client
-npm start
-```
+## 📖 Usage Guide
 
-The app will open at `http://localhost:3000`
+### 1. Registration
+*   The contract owner registers participants (Suppliers, Manufacturers, Distributors, Retailers).
+*   Navigate to the **Assign Roles** page to onboard new entities.
 
-### 6. Configure MetaMask
+### 2. Supply Chain Flow
+*   **Order**: Initiate a new product batch.
+*   **Supply -> Manufacture -> Distribute -> Retail**: Each participant logs their stage completion on the blockchain.
+*   **Track**: Use the **Track** page to see the real-time status of any product ID.
 
-- Add Ganache network:
-  - RPC: `http://127.0.0.1:8545`
-  - Chain ID: `1337`
-- Import accounts from Ganache using private keys
+### 3. Verification & Trust
+*   **Verify**: Consumers use the **Verify** page (or scan QR) to check product history and risk score.
+*   **Leaderboard**: Check the **TrustScore Board** to see top-performing partners.
 
-## User Guide
+---
 
-### Administrator Functions
+## 📝 License
 
-#### 1. Register Participants
-- Navigate to **Register Roles**
-- Add Raw Material Suppliers, Manufacturers, Distributors, and Retailers
-- Each participant is automatically initialized with a TrustScore.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-#### 2. Create Product Orders
-- Go to **Order Materials**
-- Add new products with name and description
-- Products are assigned a unique Blockchain ID and QR code.
+---
 
-#### 3. Monitor Intelligence Dashboard
-- Visit the **Anti-Counterfeit Dashboard**
-- View flagged products and risk scores generated by the AI service
-- Analyze detailed anomalies detected in the supply chain data.
-
-#### 4. Manage Recalls
-- Trigger recalls directly from the dashboard
-- The system automatically halts chain-of-custody transfers for the recalled batch.
-
-### Supply Chain Participants
-
-#### 1. Supply Chain Operations
-- **Suppliers**: Initiate raw material supply.
-- **Manufacturers**: Process materials and move to manufacturing stage.
-- **Distributors & Retailers**: Record receipts and transfers.
-- All actions are signed and immutable on the blockchain.
-
-### End Customers
-
-#### 1. Verify Product
-- Navigate to the **Verify Product** page
-- Scan the product QR code or enter the ID
-- View the complete provenance and authenticity status instantly.
-
-
-
-## Project Structure
-```
-├── contracts/
-│   ├── SmartSupplyChain.sol      # Enhanced with anti-counterfeit features
-│   └── SmartTrustScore.sol        # Soulbound NFT reputation system
-├── migrations/
-│   └── 2_deploy_contracts.js # Deploys both contracts
-├── anomaly-service/
-│   ├── server.js             # Express API
-│   ├── riskAnalyzer.js       # AI risk detection algorithms
-│   └── .env.example          # Configuration
-├── client/src/
-│   ├── AntiCounterfeit.js    # Admin dashboard for flagged products
-│   ├── Verify.js             # Public verification portal
-│   ├── TrustScoreView.js     # NFT leaderboard
-│   ├── Track.js              # Enhanced tracking with QR
-│   ├── Home.js               # Updated with new features
-│   └── [other components]
-└── README.md                 # This file
-```
-
-## Testing
-
-### Manual Testing Checklist
-
-- [ ] Deploy contracts successfully
-- [ ] Register all participant types
-- [ ] Create and track product through full lifecycle
-- [ ] Generate QR code and verify product publicly
-- [ ] Trigger anomaly by rapid stage transitions
-- [ ] Verify product gets flagged automatically
-- [ ] Recall a product and verify warnings appear
-- [ ] Check TrustScore updates after transactions
-- [ ] Test without MetaMask on verification portal
-
-## Security Features
-
-- ✅ Owner-only functions for critical operations
-- ✅ Stage validation (can't skip stages)
-- ✅ Recall protection (can't transact recalled products)
-- ✅ Soulbound tokens (non-transferable reputation)
-- ✅ Event logging for complete audit trail
-- ✅ Anomaly detection prevents fraud
-
-## Scalability
-
-- Anomaly service can be scaled horizontally
-- Blockchain events for efficient data querying
-- Client-side rendering reduces server load
-- Modular architecture for easy feature additions
-
-## Future Enhancements
-
-- IoT sensor integration for real-time temperature/humidity logs
-- GPS coordinate tracking with Google Maps integration
-- SMS notifications via Twilio
-- Machine learning model training on historical fraud data
-- Multi-language support for global deployment
-- Mobile app (React Native)
-
-## License
-
-MIT
-
-## Author
-
-**Vikas Kumar**
-
-## Troubleshooting
-
-**Contracts not deploying?**
-- Make sure Ganache is running on port 8545
-- Try `truffle migrate --reset`
-
-**Anomaly service not working?**
-- Check it's running on port 5000
-- Verify `.env` configuration
-- Service is optional for basic functionality
-
-**MetaMask errors?**
-- Reset account in MetaMask settings
-- Make sure you're connected to Ganache network
-
-**QR codes not generating?**
-- Install `qrcode.react`: `npm install qrcode.react`
-
-
+<p align="center">
+  **Built with ❤️ by Vikas Kumar**
+</p>
