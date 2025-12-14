@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
 import Web3 from "web3";
 import SupplyChainABI from "./artifacts/SmartSupplyChain.json";
-import './Supply.css'; // Import custom CSS file
+import './Supply.css';
 
 function Supply() {
     const history = useHistory();
@@ -25,9 +25,7 @@ function Supply() {
         } else if (window.web3) {
             window.web3 = new Web3(window.web3.currentProvider);
         } else {
-            window.alert(
-                "Non-Ethereum browser detected. You should consider trying MetaMask!"
-            );
+            window.alert("Non-Ethereum browser detected. You should consider trying MetaMask!");
         }
     };
 
@@ -69,9 +67,7 @@ function Supply() {
         event.preventDefault();
         try {
             const receipt = await SupplyChain.methods.RMSsupply(ID).send({ from: currentaccount });
-            if (receipt) {
-                loadBlockchaindata();
-            }
+            if (receipt) loadBlockchaindata();
         } catch (err) {
             alert("An error occurred!!!");
         }
@@ -81,9 +77,7 @@ function Supply() {
         event.preventDefault();
         try {
             const receipt = await SupplyChain.methods.Manufacturing(ID).send({ from: currentaccount });
-            if (receipt) {
-                loadBlockchaindata();
-            }
+            if (receipt) loadBlockchaindata();
         } catch (err) {
             alert("An error occurred!!!");
         }
@@ -93,9 +87,7 @@ function Supply() {
         event.preventDefault();
         try {
             const receipt = await SupplyChain.methods.Distribute(ID).send({ from: currentaccount });
-            if (receipt) {
-                loadBlockchaindata();
-            }
+            if (receipt) loadBlockchaindata();
         } catch (err) {
             alert("An error occurred!!!");
         }
@@ -105,9 +97,7 @@ function Supply() {
         event.preventDefault();
         try {
             const receipt = await SupplyChain.methods.Retail(ID).send({ from: currentaccount });
-            if (receipt) {
-                loadBlockchaindata();
-            }
+            if (receipt) loadBlockchaindata();
         } catch (err) {
             alert("An error occurred!!!");
         }
@@ -117,91 +107,94 @@ function Supply() {
         event.preventDefault();
         try {
             const receipt = await SupplyChain.methods.sold(ID).send({ from: currentaccount });
-            if (receipt) {
-                loadBlockchaindata();
-            }
+            if (receipt) loadBlockchaindata();
         } catch (err) {
             alert("An error occurred!!!");
         }
     };
 
     if (loader) {
-        return (
-            <div className="loader-container">
-                <h1 className="wait">Loading...</h1>
-            </div>
-        );
+        return <div className="wait">Loading...</div>;
     }
 
     return (
-        <div className="supply-container">
-            <div className="header-container">
-                <span><b>Current Account Address:</b> {currentaccount}</span>
-                <span onClick={redirect_to_home} className="btn btn-outline-danger btn-sm home-button">HOME</span>
-            </div>
-            <h6><b>Supply Chain Flow:</b></h6>
-            <p>Medicine Order -&gt; Raw Material Supplier -&gt; Manufacturer -&gt; Distributor -&gt; Retailer -&gt; Consumer</p>
-            <table className="table table-sm table-dark">
-                <thead>
-                    <tr>
-                        <th scope="col">Medicine ID</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Description</th>
-                        <th scope="col">Current Processing Stage</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {Object.keys(MED).map(key => (
-                        <tr key={key}>
-                            <td>{MED[key].id}</td>
-                            <td>{MED[key].name}</td>
-                            <td>{MED[key].description}</td>
-                            <td>{MedStage[key]}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+        <div className="container">
+            <div className="supply-card">
+                <div className="supply-header">
+                    <div>
+                        <h4>Supply Chain Flow</h4>
+                        <small className="text-secondary">Current Account: {currentaccount}</small>
+                    </div>
+                    <button onClick={redirect_to_home} className="btn btn-outline btn-sm">Home</button>
+                </div>
 
-            <div className="supply-step">
-                <h5><b>Step 1: Supply Raw Materials</b> (Only a registered Raw Material Supplier can perform this step):</h5>
-                <form onSubmit={handlerSubmitRMSsupply}>
-                    <input className="form-control-sm" type="text" onChange={handlerChangeID} placeholder="Enter Medicine ID" required />
-                    <button className="btn btn-outline-success btn-sm">Supply</button>
-                </form>
+                <div className="supply-flow-text">
+                    <strong>Flow:</strong> Order → Raw Material → Manufacturer → Distributor → Retailer → Consumer
+                </div>
+
+                <div className="table-responsive mb-5">
+                    <table className="custom-table" style={{ width: '100%' }}>
+                        <thead>
+                            <tr>
+                                <th>Medicine ID</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Current Processing Stage</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {Object.keys(MED).map(key => (
+                                <tr key={key}>
+                                    <td>{MED[key].id}</td>
+                                    <td>{MED[key].name}</td>
+                                    <td>{MED[key].description}</td>
+                                    <td>{MedStage[key]}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div className="supply-step-card">
+                    <h5 className="supply-step-title">Step 1: Supply Raw Materials</h5>
+                    <form onSubmit={handlerSubmitRMSsupply} className="supply-form">
+                        <input className="form-control supply-input" type="text" onChange={handlerChangeID} placeholder="Enter Medicine ID" required />
+                        <button className="btn btn-primary supply-btn">Supply</button>
+                    </form>
+                </div>
+
+                <div className="supply-step-card">
+                    <h5 className="supply-step-title">Step 2: Manufacture</h5>
+                    <form onSubmit={handlerSubmitManufacturing} className="supply-form">
+                        <input className="form-control supply-input" type="text" onChange={handlerChangeID} placeholder="Enter Medicine ID" required />
+                        <button className="btn btn-primary supply-btn">Manufacture</button>
+                    </form>
+                </div>
+
+                <div className="supply-step-card">
+                    <h5 className="supply-step-title">Step 3: Distribute</h5>
+                    <form onSubmit={handlerSubmitDistribute} className="supply-form">
+                        <input className="form-control supply-input" type="text" onChange={handlerChangeID} placeholder="Enter Medicine ID" required />
+                        <button className="btn btn-primary supply-btn">Distribute</button>
+                    </form>
+                </div>
+
+                <div className="supply-step-card">
+                    <h5 className="supply-step-title">Step 4: Retail</h5>
+                    <form onSubmit={handlerSubmitRetail} className="supply-form">
+                        <input className="form-control supply-input" type="text" onChange={handlerChangeID} placeholder="Enter Medicine ID" required />
+                        <button className="btn btn-primary supply-btn">Retail</button>
+                    </form>
+                </div>
+
+                <div className="supply-step-card">
+                    <h5 className="supply-step-title">Step 5: Mark as Sold</h5>
+                    <form onSubmit={handlerSubmitSold} className="supply-form">
+                        <input className="form-control supply-input" type="text" onChange={handlerChangeID} placeholder="Enter Medicine ID" required />
+                        <button className="btn btn-primary supply-btn">Sold</button>
+                    </form>
+                </div>
             </div>
-            <hr />
-            <div className="supply-step">
-                <h5><b>Step 2: Manufacture</b> (Only a registered Manufacturer can perform this step):</h5>
-                <form onSubmit={handlerSubmitManufacturing}>
-                    <input className="form-control-sm" type="text" onChange={handlerChangeID} placeholder="Enter Medicine ID" required />
-                    <button className="btn btn-outline-success btn-sm">Manufacture</button>
-                </form>
-            </div>
-            <hr />
-            <div className="supply-step">
-                <h5><b>Step 3: Distribute</b> (Only a registered Distributor can perform this step):</h5>
-                <form onSubmit={handlerSubmitDistribute}>
-                    <input className="form-control-sm" type="text" onChange={handlerChangeID} placeholder="Enter Medicine ID" required />
-                    <button className="btn btn-outline-success btn-sm">Distribute</button>
-                </form>
-            </div>
-            <hr />
-            <div className="supply-step">
-                <h5><b>Step 4: Retail</b> (Only a registered Retailer can perform this step):</h5>
-                <form onSubmit={handlerSubmitRetail}>
-                    <input className="form-control-sm" type="text" onChange={handlerChangeID} placeholder="Enter Medicine ID" required />
-                    <button className="btn btn-outline-success btn-sm">Retail</button>
-                </form>
-            </div>
-            <hr />
-            <div className="supply-step">
-                <h5><b>Step 5: Mark as Sold</b> (Only a registered Retailer can perform this step):</h5>
-                <form onSubmit={handlerSubmitSold}>
-                    <input className="form-control-sm" type="text" onChange={handlerChangeID} placeholder="Enter Medicine ID" required />
-                    <button className="btn btn-outline-success btn-sm">Sold</button>
-                </form>
-            </div>
-            <hr />
         </div>
     );
 }

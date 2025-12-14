@@ -49,7 +49,7 @@ function TrustScoreLeaderboard() {
         
         formattedParticipants.push({
           id: address, 
-          name: address, // Using address as name for now, or could have a mapping if name stored
+          name: address, // Using address as name for now
           score: parseInt(details.score),
           verified: parseInt(details.successfulDeliveries),
           flags: parseInt(details.flaggedProducts),
@@ -75,9 +75,9 @@ function TrustScoreLeaderboard() {
   );
 
   const getRowClass = (index) => {
-    if (index === 0) return 'top1';
-    if (index === 1) return 'top2';
-    if (index === 2) return 'top3';
+    if (index === 0) return 'top-rank-1';
+    if (index === 1) return 'top-rank-2';
+    if (index === 2) return 'top-rank-3';
     return '';
   };
 
@@ -89,84 +89,79 @@ function TrustScoreLeaderboard() {
   };
 
   if (loading) {
-    return <div className="trustscore-leaderboard card"><p style={{textAlign: 'center', padding: '20px'}}>Loading leaderboard from blockchain...</p></div>;
+    return <div className="wait">Loading leaderboard from blockchain...</div>;
   }
 
   if (error) {
-    return <div className="trustscore-leaderboard card"><p style={{textAlign: 'center', padding: '20px', color: '#dc2626'}}>{error}</p></div>;
+    return <div className="leaderboard-card"><p className="text-danger text-center">{error}</p></div>;
   }
 
   return (
-    <div className="trustscore-leaderboard card">
-      <h1>🏆 TrustScore Leaderboard</h1>
-      <p style={{fontSize: '0.9rem', color: '#666', marginBottom: '20px'}}>
-        Ranking of supply chain participants based on their blockchain TrustScore
-      </p>
+    <div className="leaderboard-card">
+      <div className="leaderboard-header">
+        <h1>🏆 TrustScore Leaderboard</h1>
+        <p className="leaderboard-subtitle">
+          Ranking of supply chain participants based on their blockchain TrustScore
+        </p>
+      </div>
+
       <div className="filter-section">
         <input
           type="text"
           placeholder="Search participants..."
           value={filter}
           onChange={e => setFilter(e.target.value)}
-          className="search-input"
+          className="filter-input"
         />
       </div>
       
-      {filtered.length === 0 ? (
-        <p style={{textAlign: 'center', padding: '20px'}}>No participants found.</p>
-      ) : (
-        <table className="table table-sm">
-          <thead>
-            <tr>
-              <th style={{width: '80px'}}>Rank</th>
-              <th>Participant Address</th>
-              <th style={{width: '120px'}}>TrustScore</th>
-              <th style={{width: '120px'}}>Verified Items</th>
-              <th style={{width: '100px'}}>Flags</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filtered.map((p, idx) => {
-              const badge = getTrustBadge(p.score);
-              return (
-                <tr key={p.id} className={getRowClass(idx)}>
-                  <td style={{fontWeight: '700', fontSize: '1.1rem'}}>
-                    {idx === 0 && '🥇'}
-                    {idx === 1 && '🥈'}
-                    {idx === 2 && '🥉'}
-                    {idx > 2 && `#${idx + 1}`}
-                  </td>
-                  <td style={{fontWeight: '600', fontFamily: 'monospace'}}>{p.name.substring(0, 10)}...{p.name.substring(38)}</td>
-                  <td>
-                    <div style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
-                      <span style={{fontSize: '1.2rem', fontWeight: '700'}}>{p.score}</span>
-                      <span style={{
-                        padding: '2px 6px',
-                        borderRadius: '4px',
-                        fontSize: '0.75rem',
-                        fontWeight: '600',
-                        backgroundColor: badge.bg,
-                        color: badge.color
-                      }}>
-                        {badge.label}
+      <div className="table-responsive">
+        {filtered.length === 0 ? (
+          <p className="text-center p-4">No participants found.</p>
+        ) : (
+          <table className="custom-table" style={{width: '100%'}}>
+            <thead>
+              <tr>
+                <th style={{width: '80px'}}>Rank</th>
+                <th>Participant Address</th>
+                <th style={{width: '180px'}}>TrustScore</th>
+                <th style={{width: '120px'}}>Verified Items</th>
+                <th style={{width: '100px'}}>Flags</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filtered.map((p, idx) => {
+                const badge = getTrustBadge(p.score);
+                return (
+                  <tr key={p.id} className={getRowClass(idx)}>
+                    <td className="rank-cell">
+                      {idx === 0 && '🥇'}
+                      {idx === 1 && '🥈'}
+                      {idx === 2 && '🥉'}
+                      {idx > 2 && `#${idx + 1}`}
+                    </td>
+                    <td className="font-monospace">{p.name.substring(0, 10)}...{p.name.substring(38)}</td>
+                    <td>
+                      <div className="score-cell">
+                        <span className="score-val">{p.score}</span>
+                        <span className="score-badge" style={{backgroundColor: badge.bg, color: badge.color}}>
+                          {badge.label}
+                        </span>
+                      </div>
+                    </td>
+                    <td>{p.verified}</td>
+                    <td>
+                      <span className={p.flags > 0 ? 'flags-positive' : 'flags-zero'}>
+                        {p.flags}
                       </span>
-                    </div>
-                  </td>
-                  <td>{p.verified}</td>
-                  <td>
-                    <span style={{
-                      color: p.flags > 0 ? '#dc2626' : '#6b7280',
-                      fontWeight: '600'
-                    }}>
-                      {p.flags}
-                    </span>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      )}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        )}
+      </div>
     </div>
   );
 }

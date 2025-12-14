@@ -1,15 +1,15 @@
-
-import React, { useState, useEffect } from 'react'
-import { useHistory } from "react-router-dom"
+import React, { useState, useEffect } from 'react';
+import { useHistory } from "react-router-dom";
 import Web3 from "web3";
 import SupplyChainABI from "./artifacts/SmartSupplyChain.json";
+import './AddMed.css';
 
 function AddMed() {
-    const history = useHistory()
+    const history = useHistory();
     useEffect(() => {
         loadWeb3();
         loadBlockchaindata();
-    }, [])
+    }, []);
 
     const [currentaccount, setCurrentaccount] = useState("");
     const [loader, setloader] = useState(true);
@@ -26,9 +26,7 @@ function AddMed() {
         } else if (window.web3) {
             window.web3 = new Web3(window.web3.currentProvider);
         } else {
-            window.alert(
-                "Non-Ethereum browser detected. You should consider trying MetaMask!"
-            );
+            window.alert("Non-Ethereum browser detected. You should consider trying MetaMask!");
         }
     };
 
@@ -56,27 +54,19 @@ function AddMed() {
         } else {
             window.alert('The smart contract is not deployed to current network');
         }
-    }
-
-    if (loader) {
-        return (
-            <div>
-                <h1 className="wait">Loading...</h1>
-            </div>
-        )
-    }
+    };
 
     const redirect_to_home = () => {
-        history.push('/')
-    }
+        history.push('/');
+    };
 
     const handlerChangeNameMED = (event) => {
         setMedName(event.target.value);
-    }
+    };
 
     const handlerChangeDesMED = (event) => {
         setMedDes(event.target.value);
-    }
+    };
 
     const handlerSubmitMED = async (event) => {
         event.preventDefault();
@@ -88,47 +78,61 @@ function AddMed() {
         } catch (err) {
             alert("An error occurred!!!");
         }
+    };
+
+    if (loader) {
+        return <div className="wait">Loading...</div>;
     }
 
     return (
-        <div className="add-med-container">
-            <div className="header-container">
-                <span><b>Current Account Address:</b> {currentaccount}</span>
-                <span onClick={redirect_to_home} className="btn btn-outline-danger btn-sm home-button">HOME</span>
+        <div className="container">
+            <div className="addmed-card">
+                <div className="addmed-header">
+                    <div>
+                        <h4>Order Materials</h4>
+                        <small className="text-secondary">Current Account: {currentaccount}</small>
+                    </div>
+                    <button onClick={redirect_to_home} className="btn btn-outline btn-sm">Home</button>
+                </div>
+
+                <form onSubmit={handlerSubmitMED} className="addmed-form">
+                    <div className="mb-4">
+                        <label className="text-secondary" style={{fontSize: '0.875rem'}}>Material Name</label>
+                        <input className="form-control" type="text" onChange={handlerChangeNameMED} placeholder="e.g., Paracetamol" required />
+                    </div>
+                    <div className="mb-4">
+                        <label className="text-secondary" style={{fontSize: '0.875rem'}}>Description</label>
+                        <input className="form-control" type="text" onChange={handlerChangeDesMED} placeholder="Batch #, Type, etc." required />
+                    </div>
+                    <button className="btn btn-primary" type="submit">Order Material</button>
+                </form>
+
+                <h5 className="mb-4">Ordered Materials</h5>
+                <div className="table-responsive">
+                    <table className="custom-table" style={{ width: '100%' }}>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Current Stage</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {Object.keys(MED).map((key) => (
+                                <tr key={key}>
+                                    <td>{MED[key].id}</td>
+                                    <td>{MED[key].name}</td>
+                                    <td>{MED[key].description}</td>
+                                    <td>{MedStage[key]}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <h4>Add Battery Order</h4>
-            <form onSubmit={handlerSubmitMED} className="med-form">
-                <div className="form-group">
-                    <input className="form-control-sm" type="text" onChange={handlerChangeNameMED} placeholder="Battery Name" required />
-                </div>
-                <div className="form-group">
-                    <input className="form-control-sm" type="text" onChange={handlerChangeDesMED} placeholder="Battery Description" required />
-                </div>
-                <button className="btn btn-outline-success btn-sm">Order</button>
-            </form>
-            <h4>Ordered Batteries</h4>
-            <table className="table table-sm">
-                <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Description</th>
-                        <th scope="col">Current Stage</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {Object.keys(MED).map((key) => (
-                        <tr key={key}>
-                            <td>{MED[key].id}</td>
-                            <td>{MED[key].name}</td>
-                            <td>{MED[key].description}</td>
-                            <td>{MedStage[key]}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
         </div>
-    )
+    );
 }
 
-export default AddMed
+export default AddMed;

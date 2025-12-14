@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Web3 from "web3";
 import SupplyChainABI from "./artifacts/SmartSupplyChain.json";
 import { useHistory } from "react-router-dom";
-import './AssignRoles.css'; // Import custom CSS file
+import './AssignRoles.css';
 
 function AssignRoles() {
     const history = useHistory();
@@ -108,93 +108,114 @@ function AssignRoles() {
     };
 
     if (loading) {
-        return <h1 className="wait">Loading...</h1>;
+        return <div className="wait">Loading...</div>;
     }
 
     return (
-        <div className="assign-roles-container">
-            <div className="header-container">
-                <span><b>Current Account Address:</b> {currentAccount}</span>
-                <span onClick={() => history.push('/')} className="btn btn-outline-danger btn-sm home-button">HOME</span>
-            </div>
-            <h4>Assign Roles</h4>
-            <form onSubmit={handleRoleSubmit} className="role-form">
-                <div className="form-group">
-                    <select
-                        className="form-control-sm"
-                        name="type"
-                        onChange={handleInputChange}
-                        value={newRole.type}
-                        required
-                    >
-                        <option value="rms">Raw Material Supplier</option>
-                        <option value="man">Manufacturer</option>
-                        <option value="dis">Distributor</option>
-                        <option value="ret">Retailer</option>
-                    </select>
+        <div className="container">
+            <div className="roles-card">
+                <div className="roles-header">
+                    <div>
+                        <h4 className="roles-title">Assign Roles</h4>
+                        <small className="text-secondary">Current Account: {currentAccount}</small>
+                    </div>
+                    <button onClick={() => history.push('/')} className="btn btn-outline btn-sm">Home</button>
                 </div>
-                <div className="form-group">
-                    <input
-                        className="form-control-sm"
-                        type="text"
-                        name="address"
-                        placeholder="Ethereum Address"
-                        onChange={handleInputChange}
-                        value={newRole.address}
-                        required
-                    />
-                </div>
-                <div className="form-group">
-                    <input
-                        className="form-control-sm"
-                        type="text"
-                        name="name"
-                        placeholder="Name"
-                        onChange={handleInputChange}
-                        value={newRole.name}
-                        required
-                    />
-                </div>
-                <div className="form-group">
-                    <input
-                        className="form-control-sm"
-                        type="text"
-                        name="place"
-                        placeholder="Based In"
-                        onChange={handleInputChange}
-                        value={newRole.place}
-                        required
-                    />
-                </div>
-                <button className="btn btn-outline-success btn-sm">Register</button>
-            </form>
 
-            <h4>Registered Roles</h4>
-            {["rms", "man", "dis", "ret"].map((roleType) => (
-                <div key={roleType}>
-                    <h5>{roleType.toUpperCase()}s:</h5>
-                    <table className="table table-sm">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Place</th>
-                                <th>Ethereum Address</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {roles[roleType].map((role, index) => (
-                                <tr key={index}>
-                                    <td>{role.id}</td>
-                                    <td>{role.name}</td>
-                                    <td>{role.place}</td>
-                                    <td>{role.addr}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                <form onSubmit={handleRoleSubmit} className="roles-form">
+                    <div className="mb-4">
+                        <label className="text-secondary" style={{fontSize: '0.875rem'}}>Role Type</label>
+                        <select
+                            className="form-control"
+                            name="type"
+                            onChange={handleInputChange}
+                            value={newRole.type}
+                            required
+                        >
+                            <option value="rms">Raw Material Supplier</option>
+                            <option value="man">Manufacturer</option>
+                            <option value="dis">Distributor</option>
+                            <option value="ret">Retailer</option>
+                        </select>
+                    </div>
+                    <div className="mb-4">
+                        <label className="text-secondary" style={{fontSize: '0.875rem'}}>Ethereum Address</label>
+                        <input
+                            className="form-control"
+                            type="text"
+                            name="address"
+                            placeholder="0x..."
+                            onChange={handleInputChange}
+                            value={newRole.address}
+                            required
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <label className="text-secondary" style={{fontSize: '0.875rem'}}>Name</label>
+                        <input
+                            className="form-control"
+                            type="text"
+                            name="name"
+                            placeholder="Company Name"
+                            onChange={handleInputChange}
+                            value={newRole.name}
+                            required
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <label className="text-secondary" style={{fontSize: '0.875rem'}}>Location</label>
+                        <input
+                            className="form-control"
+                            type="text"
+                            name="place"
+                            placeholder="City, Country"
+                            onChange={handleInputChange}
+                            value={newRole.place}
+                            required
+                        />
+                    </div>
+                    <button className="btn btn-primary" type="submit">Register Role</button>
+                </form>
+
+                <div className="roles-table-container">
+                    {["rms", "man", "dis", "ret"].map((roleType) => (
+                        <div key={roleType} className="mb-4">
+                            <h5 className="roles-table-title">
+                                {roleType === 'rms' && 'Raw Material Suppliers'}
+                                {roleType === 'man' && 'Manufacturers'}
+                                {roleType === 'dis' && 'Distributors'}
+                                {roleType === 'ret' && 'Retailers'}
+                            </h5>
+                            <table className="custom-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Place</th>
+                                        <th>Ethereum Address</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {roles[roleType].length > 0 ? (
+                                        roles[roleType].map((role, index) => (
+                                            <tr key={index}>
+                                                <td>{role.id}</td>
+                                                <td>{role.name}</td>
+                                                <td>{role.place}</td>
+                                                <td>{role.addr}</td>
+                                            </tr>
+                                        ))
+                                    ) : (
+                                        <tr>
+                                            <td colSpan="4" className="text-center">No {roleType.toUpperCase()} registered yet.</td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
+                    ))}
                 </div>
-            ))}
+            </div>
         </div>
     );
 }

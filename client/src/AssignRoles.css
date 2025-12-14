@@ -1,50 +1,79 @@
-.assign-roles-container {
-    padding: 20px;
-    margin: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
+.roles-card {
+    background-color: var(--surface-color);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: var(--spacing-6);
+    border: 1px solid var(--border-color);
+    margin-top: var(--spacing-6);
 }
 
-.header-container {
+.roles-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: var(--spacing-6);
+    padding-bottom: var(--spacing-4);
+    border-bottom: 1px solid var(--border-color);
 }
 
-.home-button {
-    margin-left: 10px;
-    padding: 5px 10px;
+.roles-title {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
 }
 
-h4 {
-    margin-bottom: 15px;
+.roles-form {
+    background-color: var(--background-color);
+    padding: var(--spacing-6);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    margin-bottom: var(--spacing-8);
 }
 
-.role-form {
-    margin-bottom: 30px;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background-color: #fff;
+.roles-table-container {
+    margin-top: var(--spacing-8);
 }
 
-.form-group {
-    margin-bottom: 10px;
+.roles-table-title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-4);
 }
 
-.table-sm {
-    margin-top: 20px;
+.custom-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
 }
 
-.table thead th {
-    background-color: #f1f1f1;
+.custom-table th {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: var(--font-weight-medium);
+    text-align: left;
+    padding: var(--spacing-3) var(--spacing-4);
+    font-size: var(--font-size-sm);
 }
 
-.table tbody tr {
-    background-color: #fff;
+.custom-table th:first-child {
+    border-top-left-radius: var(--radius-sm);
+    border-bottom-left-radius: var(--radius-sm);
 }
 
-.table tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
+.custom-table th:last-child {
+    border-top-right-radius: var(--radius-sm);
+    border-bottom-right-radius: var(--radius-sm);
+}
+
+.custom-table td {
+    padding: var(--spacing-3) var(--spacing-4);
+    border-bottom: 1px solid var(--border-color);
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+}
+
+.custom-table tr:last-child td {
+    border-bottom: none;
 }

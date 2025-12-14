@@ -85,20 +85,31 @@ function AntiCounterfeitDashboard() {
   };
 
   if (loading) {
-    return <div className="anti-counterfeit-dashboard card"><p style={{textAlign: 'center', padding: '20px'}}>Loading dashboard from blockchain...</p></div>;
+    return <div className="wait">Loading dashboard from blockchain...</div>;
   }
 
   if (error) {
-    return <div className="anti-counterfeit-dashboard card"><p style={{textAlign: 'center', padding: '20px', color: '#dc2626'}}>{error}</p></div>;
+    return <div className="dashboard-card"><p className="text-danger text-center">{error}</p></div>;
   }
 
+  const getRiskClass = (risk) => {
+    switch(risk) {
+      case 'LOW': return 'risk-low';
+      case 'MEDIUM': return 'risk-medium';
+      case 'HIGH': return 'risk-high';
+      case 'CRITICAL': return 'risk-critical';
+      default: return '';
+    }
+  };
+
   return (
-    <div className="anti-counterfeit-dashboard card">
-      <div className="header">
+    <div className="dashboard-card">
+      <div className="dashboard-header">
         <h3>🛡️ Anti-Counterfeit Dashboard</h3>
-        <p style={{fontSize: '0.9rem', color: '#666', marginTop: '5px'}}>Real-time monitoring from blockchain</p>
+        <p className="dashboard-subtitle">Real-time monitoring from blockchain</p>
       </div>
-      <div className="stats-grid grid-2">
+      
+      <div className="stats-grid">
         <div className="stat-card">
           <div className="stat-value">{stats.total}</div>
           <div className="stat-label">Total Products</div>
@@ -116,35 +127,34 @@ function AntiCounterfeitDashboard() {
           <div className="stat-label">Safety Rate</div>
         </div>
       </div>
-      <section className="section">
+
+      <section className="dashboard-section">
         <h3>Recent Activity</h3>
-        {recent.length === 0 ? (
-          <p style={{textAlign: 'center', padding: '20px', color: '#666'}}>✅ All products are safe! No flagged or high-risk items.</p>
-        ) : (
-          <table className="table table-sm">
-            <thead>
-              <tr><th>ID</th><th>Name</th><th>Risk Level</th><th>Status</th></tr>
-            </thead>
-            <tbody>
-              {recent.map(item => (
-                <tr key={item.id} className={item.status === 'Flagged' || item.status === 'Recalled' ? 'flagged-row' : ''}>
-                  <td>{item.id}</td>
-                  <td>{item.name}</td>
-                  <td>
-                    <span style={{
-                      padding: '3px 8px', borderRadius: '4px', fontSize: '0.85rem', fontWeight: '600',
-                      backgroundColor: item.risk === 'LOW' ? '#d1fae5' : item.risk === 'MEDIUM' ? '#fef3c7' : item.risk === 'HIGH' ? '#fed7aa' : '#fecaca',
-                      color: item.risk === 'LOW' ? '#065f46' : item.risk === 'MEDIUM' ? '#92400e' : item.risk === 'HIGH' ? '#9a3412' : '#991b1b'
-                    }}>
-                      {item.risk}
-                    </span>
-                  </td>
-                  <td>{item.status}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
+        <div className="table-responsive">
+          {recent.length === 0 ? (
+            <p className="text-center text-secondary p-4">✅ All products are safe! No flagged or high-risk items.</p>
+          ) : (
+            <table className="custom-table" style={{width: '100%'}}>
+              <thead>
+                <tr><th>ID</th><th>Name</th><th>Risk Level</th><th>Status</th></tr>
+              </thead>
+              <tbody>
+                {recent.map(item => (
+                  <tr key={item.id} className={item.status === 'Flagged' || item.status === 'Recalled' ? 'flagged-row' : ''}>
+                    <td>{item.id}</td>
+                    <td>{item.name}</td>
+                    <td>
+                      <span className={`risk-badge ${getRiskClass(item.risk)}`}>
+                        {item.risk}
+                      </span>
+                    </td>
+                    <td>{item.status}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </div>
       </section>
     </div>
   );

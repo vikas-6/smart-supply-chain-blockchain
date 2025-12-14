@@ -1,42 +1,94 @@
-/* TrustScoreLeaderboard component styling */
-
-.trustscore-leaderboard {
-  padding: var(--spacing-xl);
-  background: white;
-  border-radius: var(--radius-xl);
+.leaderboard-card {
+  background-color: var(--surface-color);
+  border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
-  margin: var(--spacing-xl) auto;
+  padding: var(--spacing-8);
+  border: 1px solid var(--border-color);
   max-width: 1000px;
+  margin: var(--spacing-8) auto;
 }
 
-.trustscore-leaderboard .filter-section {
-  margin-bottom: var(--spacing-lg);
+.leaderboard-header {
+  text-align: center;
+  margin-bottom: var(--spacing-8);
 }
 
-.trustscore-leaderboard .search-input {
-  width: 100%;
-  padding: var(--spacing-sm);
-  border: 2px solid var(--gray-200);
+.leaderboard-header h1 {
+  font-size: var(--font-size-2xl);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-2);
+}
+
+.leaderboard-subtitle {
+  font-size: var(--font-size-md);
+  color: var(--text-secondary);
+}
+
+.filter-section {
+  margin-bottom: var(--spacing-6);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.filter-input {
+  padding: var(--spacing-2) var(--spacing-4);
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
+  width: 250px;
+  font-size: var(--font-size-sm);
 }
 
-.trustscore-leaderboard .table th {
-  background: var(--gray-100);
+.filter-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
 }
 
-.trustscore-leaderboard .table tbody tr:nth-child(even) {
-  background: var(--gray-50);
+.top-rank-1 {
+  background-color: #fffbeb;
+  /* Light yellow */
+  font-weight: var(--font-weight-semibold);
 }
 
-.trustscore-leaderboard .top1 {
-  background: var(--success-light);
+.top-rank-2 {
+  background-color: #f9fafb;
+  /* Light gray */
+}
+
+.top-rank-3 {
+  background-color: #fff7ed;
+  /* Light orange */
+}
+
+.score-cell {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.score-val {
+  font-size: 1.2rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+}
+
+.score-badge {
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
   font-weight: 600;
 }
 
-.trustscore-leaderboard .top2 {
-  background: var(--warning-light);
+.rank-cell {
+  font-size: 1.25rem;
+  font-weight: bold;
 }
 
-.trustscore-leaderboard .top3 {
-  background: var(--danger-light);
+.flags-positive {
+  color: var(--danger-color);
+  font-weight: 600;
+}
+
+.flags-zero {
+  color: var(--text-secondary);
 }
